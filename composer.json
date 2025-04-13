@@ -1,0 +1,20 @@
+{
+    "name": "sampouzet/auth",
+    "description": "Authentication module for Laminas",
+    "type": "module",
+    "require": {
+        "samuelpouzet/crypt": "^1.0",
+        "laminas/laminas-session": "^2.24"
+    },
+    "autoload": {
+        "psr-4": {
+            "SamuelPouzet\\Auth\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Samuel POUZET",
+            "email": "samuel.pouzet@yahoo.fr"
+        }
+    ]
+}
