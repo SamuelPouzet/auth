@@ -4,7 +4,6 @@ namespace SamuelPouzet\Auth\Listener;
 
 use Application\Controller\LoginController;
 use Laminas\EventManager\EventManagerInterface;
-use Laminas\Http\Response;
 use Laminas\Mvc\MvcEvent;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;

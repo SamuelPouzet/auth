@@ -16,13 +16,17 @@ use SamuelPouzet\Auth\Adapter\Factory\AuthAdapterFactory;
 use SamuelPouzet\Auth\Entity\User;
 use SamuelPouzet\Auth\Interface\UserInterface;
 use SamuelPouzet\Auth\Listener\AuthListener;
+use SamuelPouzet\Auth\Manager\Factory\UserManagerFactory;
+use SamuelPouzet\Auth\Manager\UserManager;
 use SamuelPouzet\Auth\Service\AuthService;
 use SamuelPouzet\Auth\Service\CredentialService;
 use SamuelPouzet\Auth\Service\Factory\AuthenticationServiceFactory;
 use SamuelPouzet\Auth\Service\Factory\AuthServiceFactory;
 use SamuelPouzet\Auth\Service\Factory\CredentialServiceFactory;
 use SamuelPouzet\Auth\Service\Factory\IdentityServiceFactory;
+use SamuelPouzet\Auth\Service\Factory\UserServiceFactory;
 use SamuelPouzet\Auth\Service\IdentityService;
+use SamuelPouzet\Auth\Service\UserService;
 
 return [
     'authentication' => [
@@ -49,11 +53,13 @@ return [
             //listeners
             AuthListener::class => InvokableFactory::class,
             //managers
+            UserManager::class => UserManagerFactory::class,
             // services
             AuthenticationService::class => AuthenticationServiceFactory::class,
             AuthService::class => AuthServiceFactory::class,
             CredentialService::class => CredentialServiceFactory::class,
             IdentityService::class => IdentityServiceFactory::class,
+            UserService::class => UserServiceFactory::class,
         ],
     ],
     'session_containers' => [
