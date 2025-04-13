@@ -2,7 +2,9 @@
 
 namespace SamuelPouzet\Auth\Listener;
 
+use Application\Controller\LoginController;
 use Laminas\EventManager\EventManagerInterface;
+use Laminas\Http\Response;
 use Laminas\Mvc\MvcEvent;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -30,13 +32,21 @@ class AuthListener
         try {
             $authService = $event->getApplication()->getServiceManager()->get(AuthService::class);
             if ($authService->authenticate($event)) {
-                print('user is allowed');
                 return;
             }
-            print('user is not allowed');
+
+            $this->redirectToLogin($event);
+
+            print ('not allowed');
         } catch (\Exception $exception) {
             die($exception->getMessage());
         }
+    }
+
+    protected function redirectToLogin(MvcEvent $event): void
+    {
+        $event->getRouteMatch()->setParam('controller', LoginController::class);
+        $event->getRouteMatch()->setParam('action', 'index');
     }
 
 }

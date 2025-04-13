@@ -6,6 +6,7 @@ use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\Result;
 use Laminas\Form\Form;
 use SamuelPouzet\Auth\Exception\AlreadyconnectedException;
+use SamuelPouzet\Auth\Exception\NotconnectedException;
 
 class CredentialService
 {
@@ -40,5 +41,15 @@ class CredentialService
             return $response;
         }
         return null;
+    }
+
+    public function logout()
+    {
+        if (! $this->identityService->getUser()) {
+            throw new NotconnectedException('No user connected');
+        }
+
+        $this->authenticationService->clearIdentity();
+        $this->identityService->setUser(null);
     }
 }

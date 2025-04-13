@@ -4,7 +4,6 @@ namespace SamuelPouzet\Auth\Service;
 
 use Laminas\Mvc\MvcEvent;
 use Laminas\Router\RouteMatch;
-use SamuelPouzet\Auth\Exception\ConfigNotFoundException;
 use SamuelPouzet\Auth\Interface\AuthenticationInterface;
 
 class AuthService
