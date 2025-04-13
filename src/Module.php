@@ -15,8 +15,12 @@ class Module
 
     public function onBootstrap(MvcEvent $event): void
     {
-        $sessionManager = $event->getApplication()->getServiceManager()->get(SessionManager::class);
-        $this->forgetInvalidSession($sessionManager);
+        try {
+            $sessionManager = $event->getApplication()->getServiceManager()->get(SessionManager::class);
+            $this->forgetInvalidSession($sessionManager);
+        } catch (\Exception $exception) {
+            die($exception->getMessage());
+        }
     }
 
     protected function forgetInvalidSession($sessionManager): void

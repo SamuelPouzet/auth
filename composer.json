@@ -4,6 +4,10 @@
     "type": "module",
     "require": {
         "samuelpouzet/crypt": "^1.0",
+        "doctrine/doctrine-orm-module": "^6.3",
+        "doctrine/migrations": "^3.9",
+        "laminas/laminas-cache": "^3.13",
+        "laminas/laminas-authentication": "^2.18",
         "laminas/laminas-session": "^2.24"
     },
     "autoload": {
