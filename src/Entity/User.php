@@ -7,7 +7,7 @@ use SamuelPouzet\Auth\Interface\UserInterface;
 
 #[ORM\Entity(readOnly: false)]
 #[ORM\Table(name: 'user')]
-class User implements UserInterface
+class User extends AbstractEntity implements UserInterface
 {
     #[ORM\Id, ORM\GeneratedValue(strategy: 'AUTO')]
     #[ORM\Column(name: 'id', type: 'integer', options: ['unsigned' => true])]
@@ -19,8 +19,8 @@ class User implements UserInterface
     #[ORM\Column(name: 'password', type: 'string', length: 250, unique: true, nullable: false)]
     protected string $password;
 
-    #[ORM\Column(name: 'mail', type: 'string', length: 200, nullable: false)]
-    protected string $mail;
+    #[ORM\Column(name: 'email', type: 'string', length: 200, nullable: false)]
+    protected string $email;
 
     #[ORM\Column(name: 'date_created', type: 'datetime', nullable: false)]
     protected \DateTime $date_created;
@@ -58,14 +58,14 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getMail(): string
+    public function getEmail(): string
     {
-        return $this->mail;
+        return $this->email;
     }
 
-    public function setMail(string $mail): static
+    public function setEmail(string $email): static
     {
-        $this->mail = $mail;
+        $this->email = $email;
         return $this;
     }
 

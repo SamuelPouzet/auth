@@ -4,21 +4,21 @@ namespace SamuelPouzet\Auth\Service;
 
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\Result;
-use Laminas\Form\Form;
+use SamuelPouzet\Auth\Form\Interface\AuthFormInterface;
 use SamuelPouzet\Auth\Exception\AlreadyconnectedException;
 use SamuelPouzet\Auth\Exception\NotconnectedException;
 
 class CredentialService
 {
     public function __construct(
-        protected readonly Form $form,
+        protected readonly AuthFormInterface $form,
         protected readonly AuthenticationService $authenticationService,
         protected readonly IdentityService $identityService,
     )
     {
     }
 
-    public function getForm(): Form
+    public function getForm(): AuthFormInterface
     {
         return $this->form;
     }

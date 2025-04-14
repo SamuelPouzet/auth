@@ -7,4 +7,6 @@ interface UserInterface
     public function getLogin(): ?string;
 
     public function getPassword(): ?string;
+
+    public function getArrayCopy(): array;
 }

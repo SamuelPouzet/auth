@@ -14,10 +14,15 @@ use Laminas\Session\Validator\RemoteAddr;
 use SamuelPouzet\Auth\Adapter\AuthAdapter;
 use SamuelPouzet\Auth\Adapter\Factory\AuthAdapterFactory;
 use SamuelPouzet\Auth\Entity\User;
+use SamuelPouzet\Auth\Form\AuthForm;
+use SamuelPouzet\Auth\Form\UpdateUserForm;
+use SamuelPouzet\Auth\Form\UserForm;
 use SamuelPouzet\Auth\Interface\UserInterface;
 use SamuelPouzet\Auth\Listener\AuthListener;
 use SamuelPouzet\Auth\Manager\Factory\UserManagerFactory;
 use SamuelPouzet\Auth\Manager\UserManager;
+use SamuelPouzet\Auth\Plugins\Factory\UserPluginFactory;
+use SamuelPouzet\Auth\Plugins\UserPlugin;
 use SamuelPouzet\Auth\Service\AuthService;
 use SamuelPouzet\Auth\Service\CredentialService;
 use SamuelPouzet\Auth\Service\Factory\AuthenticationServiceFactory;
@@ -29,6 +34,13 @@ use SamuelPouzet\Auth\Service\IdentityService;
 use SamuelPouzet\Auth\Service\UserService;
 
 return [
+    'samuelpouzet' => [
+        'form' => [
+            'authForm' => AuthForm::class,
+            'userForm' => UserForm::class,
+            'updateUserForm' => UpdateUserForm::class,
+        ],
+    ],
     'authentication' => [
         'permissive' => true,
         'access_filter' => [
@@ -60,6 +72,14 @@ return [
             CredentialService::class => CredentialServiceFactory::class,
             IdentityService::class => IdentityServiceFactory::class,
             UserService::class => UserServiceFactory::class,
+        ],
+    ],
+    'controller_plugins' => [
+        'factories' => [
+            UserPlugin::class => UserPluginFactory::class,
+        ],
+        'aliases' => [
+            'getUser' => UserPlugin::class,
         ],
     ],
     'session_containers' => [

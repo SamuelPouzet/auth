@@ -7,9 +7,9 @@ use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterAwareInterface;
-use Laminas\Validator\Hostname;
+use SamuelPouzet\Auth\Form\Interface\AuthFormInterface;
 
-class AuthForm extends Form implements InputFilterAwareInterface
+class AuthForm extends Form implements InputFilterAwareInterface, AuthFormInterface
 {
     public function __construct()
     {
