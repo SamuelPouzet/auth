@@ -2,6 +2,9 @@
     "name": "sampouzet/auth",
     "description": "Authentication module for Laminas",
     "type": "module",
+    "license": [
+        "LGPL-3.0-or-later"
+    ],
     "require": {
         "samuelpouzet/crypt": "^1.0",
         "doctrine/doctrine-orm-module": "^6.3",
