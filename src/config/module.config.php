@@ -34,6 +34,8 @@ use SamuelPouzet\Auth\Service\Factory\IdentityServiceFactory;
 use SamuelPouzet\Auth\Service\Factory\UserServiceFactory;
 use SamuelPouzet\Auth\Service\IdentityService;
 use SamuelPouzet\Auth\Service\UserService;
+use SamuelPouzet\Auth\View\CurrentUserHelper;
+use SamuelPouzet\Auth\View\Factory\CurrentUserHelperFactory;
 
 return [
     'samuelpouzet' => [
@@ -85,6 +87,14 @@ return [
             'getUser' => UserPlugin::class,
             'getCurrentUser' => CurrentUserPlugin::class,
         ],
+    ],
+    'view_helpers' => [
+        'factories' => [
+            CurrentUserHelper::class => CurrentUserHelperFactory::class,
+        ],
+        'aliases' => [
+            'currentUser' => CurrentUserHelper::class,
+        ]
     ],
     'session_containers' => [
         'Purple_auth'

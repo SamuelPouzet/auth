@@ -3,7 +3,6 @@
 namespace SamuelPouzet\Auth\Form;
 
 use Laminas\Form\Element\Email;
-use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterAwareInterface;
