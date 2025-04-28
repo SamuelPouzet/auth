@@ -54,9 +54,6 @@ return [
             LoginController::class => [
                 'index' => '@'
             ],
-            ProtectedController::class => [
-                'index' => '@'
-            ],
         ]
     ],
     'listeners' => [

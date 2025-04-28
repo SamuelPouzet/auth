@@ -1,5 +1,5 @@
 {
-    "name": "sampouzet/auth",
+    "name": "samuelpouzet/auth",
     "description": "Authentication module for Laminas",
     "type": "module",
     "license": [
@@ -23,5 +23,10 @@
             "name": "Samuel POUZET",
             "email": "samuel.pouzet@yahoo.fr"
         }
-    ]
+    ],
+    "extra": {
+        "laminas": {
+            "component": "SamuelPouzet\\Auth"
+        }
+    }
 }
