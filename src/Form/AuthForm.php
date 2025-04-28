@@ -2,12 +2,11 @@
 
 namespace SamuelPouzet\Auth\Form;
 
-use Laminas\Form\Element\Email;
 use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterAwareInterface;
-use SamuelPouzet\Auth\Form\Interface\AuthFormInterface;
+use SamuelPouzet\Auth\Interface\Form\AuthFormInterface;
 
 class AuthForm extends Form implements InputFilterAwareInterface, AuthFormInterface
 {

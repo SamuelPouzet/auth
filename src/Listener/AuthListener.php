@@ -35,8 +35,6 @@ class AuthListener
             }
 
             $this->redirectToLogin($event);
-
-            print ('not allowed');
         } catch (\Exception $exception) {
             die($exception->getMessage());
         }

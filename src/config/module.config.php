@@ -21,6 +21,8 @@ use SamuelPouzet\Auth\Interface\UserInterface;
 use SamuelPouzet\Auth\Listener\AuthListener;
 use SamuelPouzet\Auth\Manager\Factory\UserManagerFactory;
 use SamuelPouzet\Auth\Manager\UserManager;
+use SamuelPouzet\Auth\Plugins\CurrentUserPlugin;
+use SamuelPouzet\Auth\Plugins\Factory\CurrentUserPluginFactory;
 use SamuelPouzet\Auth\Plugins\Factory\UserPluginFactory;
 use SamuelPouzet\Auth\Plugins\UserPlugin;
 use SamuelPouzet\Auth\Service\AuthService;
@@ -77,9 +79,11 @@ return [
     'controller_plugins' => [
         'factories' => [
             UserPlugin::class => UserPluginFactory::class,
+            CurrentUserPlugin::class => CurrentUserPluginFactory::class,
         ],
         'aliases' => [
             'getUser' => UserPlugin::class,
+            'getCurrentUser' => CurrentUserPlugin::class,
         ],
     ],
     'session_containers' => [

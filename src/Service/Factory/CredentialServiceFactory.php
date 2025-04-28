@@ -6,7 +6,7 @@ use Laminas\Authentication\AuthenticationService;
 use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
-use SamuelPouzet\Auth\Form\Interface\AuthFormInterface;
+use SamuelPouzet\Auth\Interface\Form\AuthFormInterface;
 use SamuelPouzet\Auth\Service\CredentialService;
 use SamuelPouzet\Auth\Service\IdentityService;
 

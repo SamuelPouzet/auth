@@ -4,7 +4,7 @@ namespace SamuelPouzet\Auth\Service;
 
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\Result;
-use SamuelPouzet\Auth\Form\Interface\AuthFormInterface;
+use SamuelPouzet\Auth\Interface\Form\AuthFormInterface;
 use SamuelPouzet\Auth\Exception\AlreadyconnectedException;
 use SamuelPouzet\Auth\Exception\NotconnectedException;
 

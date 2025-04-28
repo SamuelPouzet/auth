@@ -1,6 +1,6 @@
 <?php
 
-namespace SamuelPouzet\Auth\Form\Interface;
+namespace SamuelPouzet\Auth\Interface\Form;
 
 interface AuthFormInterface
 {
