@@ -7,6 +7,7 @@ use Laminas\EventManager\EventManagerInterface;
 use Laminas\Mvc\MvcEvent;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use SamuelPouzet\Auth\Enumerations\AuthStatusEnum;
 use SamuelPouzet\Auth\Service\AuthService;
 
 class AuthListener
@@ -30,11 +31,11 @@ class AuthListener
     {
         try {
             $authService = $event->getApplication()->getServiceManager()->get(AuthService::class);
-            if ($authService->authenticate($event)) {
-                return;
-            }
+            $result = $authService->authenticate($event);
 
-            $this->redirectToLogin($event);
+            if ($result->getStatus() !== AuthStatusEnum::GRANTED) {
+                $this->redirectToLogin($event);
+            }
         } catch (\Exception $exception) {
             die($exception->getMessage());
         }
@@ -45,5 +46,4 @@ class AuthListener
         $event->getRouteMatch()->setParam('controller', LoginController::class);
         $event->getRouteMatch()->setParam('action', 'index');
     }
-
 }
