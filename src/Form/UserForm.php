@@ -12,7 +12,6 @@ use SamuelPouzet\Auth\Interface\Form\UserFormInterface;
 
 class UserForm extends Form implements InputFilterAwareInterface, UserFormInterface
 {
-
     public function __construct()
     {
         parent::__construct();

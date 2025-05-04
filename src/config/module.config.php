@@ -1,4 +1,5 @@
 <?php
+
 namespace SamuelPouzet\Auth\Config;
 
 use Application\Controller\IndexController;
@@ -13,6 +14,8 @@ use Laminas\Session\Validator\HttpUserAgent;
 use Laminas\Session\Validator\RemoteAddr;
 use SamuelPouzet\Auth\Adapter\AuthAdapter;
 use SamuelPouzet\Auth\Adapter\Factory\AuthAdapterFactory;
+use SamuelPouzet\Auth\Command\Factory\InitDefaultUserCommandFactory;
+use SamuelPouzet\Auth\Command\InitDefaultUserCommand;
 use SamuelPouzet\Auth\Entity\User;
 use SamuelPouzet\Auth\Form\AuthForm;
 use SamuelPouzet\Auth\Form\UpdateUserForm;
@@ -43,6 +46,11 @@ return [
             'authForm' => AuthForm::class,
             'userForm' => UserForm::class,
             'updateUserForm' => UpdateUserForm::class,
+            'default_user' => [
+                'login' => 'admin',
+                'password' => 'Secur1ty!',
+                'email' => 'admin@exemple.com',
+            ],
         ],
     ],
     'authentication' => [
@@ -63,6 +71,8 @@ return [
         'factories' => [
             //adapters
             AuthAdapter::class => AuthAdapterFactory::class,
+            //commands
+            InitDefaultUserCommand::class => InitDefaultUserCommandFactory::class,
             //listeners
             AuthListener::class => InvokableFactory::class,
             //managers
@@ -124,6 +134,11 @@ return [
                     ],
                 ],
             ],
+        ],
+    ],
+    'laminas-cli' => [
+        'commands' => [
+            'auth:init' => InitDefaultUserCommand::class,
         ],
     ],
     'doctrine' => [
