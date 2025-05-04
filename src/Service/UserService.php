@@ -35,10 +35,11 @@ class UserService
         }
     }
 
-    public function updateUser(UserInterface $user, array $post): void
+    public function updateUser(UserInterface $user, array $post, bool $force = false): void
     {
+        var_dump($post);
         $this->updateUserForm->setData($post);
-        if ($this->updateUserForm->isValid()) {
+        if ($this->updateUserForm->isValid() || $force) {
             $data = $this->updateUserForm->getData();
             $this->userManager->updateUser($user, $data);
         }

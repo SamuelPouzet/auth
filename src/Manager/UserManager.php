@@ -31,11 +31,11 @@ class UserManager
 
     public function updateUser(UserInterface $user, array $data): void
     {
-        if ($user->getLogin() !== $data['login']) {
+        if (!! $data['login'] && $user->getLogin() !== $data['login']) {
             $user->setLogin($data['login']);
         }
 
-        if ($user->getEmail() !== $data['email']) {
+        if (!! $data['email'] && $user->getEmail() !== $data['email']) {
             $user->setEmail($data['email']);
         }
 
