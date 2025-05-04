@@ -3,8 +3,6 @@
 namespace SamuelPouzet\Auth\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use SamuelPouzet\Auth\Entity\User;
-use SamuelPouzet\Auth\Interface\Form\UserFormInterface;
 use SamuelPouzet\Auth\Interface\UserInterface;
 use SamuelPouzet\Auth\Service\UserService;
 use Symfony\Component\Console\Command\Command;

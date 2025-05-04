@@ -14,6 +14,8 @@ use Laminas\Session\Validator\HttpUserAgent;
 use Laminas\Session\Validator\RemoteAddr;
 use SamuelPouzet\Auth\Adapter\AuthAdapter;
 use SamuelPouzet\Auth\Adapter\Factory\AuthAdapterFactory;
+use SamuelPouzet\Auth\Command\CreateUserCommand;
+use SamuelPouzet\Auth\Command\Factory\CreateUserCommandFactory;
 use SamuelPouzet\Auth\Command\Factory\InitDefaultUserCommandFactory;
 use SamuelPouzet\Auth\Command\InitDefaultUserCommand;
 use SamuelPouzet\Auth\Entity\User;
@@ -72,6 +74,7 @@ return [
             //adapters
             AuthAdapter::class => AuthAdapterFactory::class,
             //commands
+            CreateUserCommand::class => CreateUserCommandFactory::class,
             InitDefaultUserCommand::class => InitDefaultUserCommandFactory::class,
             //listeners
             AuthListener::class => InvokableFactory::class,
@@ -139,6 +142,7 @@ return [
     'laminas-cli' => [
         'commands' => [
             'auth:init' => InitDefaultUserCommand::class,
+            'auth:user:create' => CreateUserCommand::class,
         ],
     ],
     'doctrine' => [
