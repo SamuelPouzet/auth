@@ -16,20 +16,29 @@ class CreateUserCommand extends Command
 {
     public function __construct(
         protected EntityManagerInterface $entityManager,
-        protected UserService $userService,
-    ) {
+        protected UserService            $userService,
+    )
+    {
         parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this->addOption('login', 'l', InputOption::VALUE_REQUIRED, 'New User Login');
+        $this->addOption('login', 'l', InputOption::VALUE_OPTIONAL, 'New User Login');
+        $this->addOption('password', 'p', InputOption::VALUE_OPTIONAL, 'New User password');
+        $this->addOption('email', 'e', InputOption::VALUE_OPTIONAL, 'New User email');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $login = $input->getOption('login');
+
+        if (! $login) {
+            $login = $io->askQuestion(
+                (new Question('Enter Login')),
+            );
+        }
 
         $user = $this->entityManager->getRepository(UserInterface::class)->findOneBy(['login' => $login]);
         if ($user) {
@@ -38,9 +47,9 @@ class CreateUserCommand extends Command
         }
 
         try {
-            $password = $io->askHidden('Enter Password');
+            $password = $input->getOption('password') ?? $io->askHidden('Enter Password');
 
-            $email = $io->askQuestion(
+            $email = $input->getOption('email') ?? $io->askQuestion(
                 (new Question('Enter Email')),
             );
 
