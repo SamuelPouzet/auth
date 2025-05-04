@@ -43,4 +43,9 @@ class UserService
             $this->userManager->updateUser($user, $data);
         }
     }
+
+    public function updatePassword(UserInterface $user, array $post, bool $needsValidation = true): void
+    {
+        $this->userManager->updatePassword($user, $post);
+    }
 }

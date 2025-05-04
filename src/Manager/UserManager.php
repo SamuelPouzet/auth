@@ -41,4 +41,11 @@ class UserManager
 
         $this->entityManager->flush();
     }
+
+    public function updatePassword(UserInterface $user, array $data): void
+    {
+        $hash = new Crypt();
+        $user->setPassword($hash->hash($data['password']));
+        $this->entityManager->flush();
+    }
 }

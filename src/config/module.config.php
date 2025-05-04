@@ -17,7 +17,9 @@ use SamuelPouzet\Auth\Adapter\Factory\AuthAdapterFactory;
 use SamuelPouzet\Auth\Command\CreateUserCommand;
 use SamuelPouzet\Auth\Command\Factory\CreateUserCommandFactory;
 use SamuelPouzet\Auth\Command\Factory\InitDefaultUserCommandFactory;
+use SamuelPouzet\Auth\Command\Factory\UpdatePasswordCommandFactory;
 use SamuelPouzet\Auth\Command\InitDefaultUserCommand;
+use SamuelPouzet\Auth\Command\UpdatePasswordCommand;
 use SamuelPouzet\Auth\Entity\User;
 use SamuelPouzet\Auth\Form\AuthForm;
 use SamuelPouzet\Auth\Form\UpdateUserForm;
@@ -76,6 +78,7 @@ return [
             //commands
             CreateUserCommand::class => CreateUserCommandFactory::class,
             InitDefaultUserCommand::class => InitDefaultUserCommandFactory::class,
+            UpdatePasswordCommand::class => UpdatePasswordCommandFactory::class,
             //listeners
             AuthListener::class => InvokableFactory::class,
             //managers
@@ -143,6 +146,7 @@ return [
         'commands' => [
             'auth:init' => InitDefaultUserCommand::class,
             'auth:user:create' => CreateUserCommand::class,
+            'auth:user:password-update' => UpdatePasswordCommand::class,
         ],
     ],
     'doctrine' => [
