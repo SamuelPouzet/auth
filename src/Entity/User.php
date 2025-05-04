@@ -3,6 +3,7 @@
 namespace SamuelPouzet\Auth\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use SamuelPouzet\Auth\Enumerations\UserStatusEnum;
 use SamuelPouzet\Auth\Interface\UserInterface;
 
 #[ORM\Entity(readOnly: false)]
@@ -21,6 +22,9 @@ class User extends AbstractEntity implements UserInterface
 
     #[ORM\Column(name: 'email', type: 'string', length: 200, nullable: false)]
     protected string $email;
+
+    #[ORM\Column(name: 'status', length: 200, nullable: false, enumType: UserStatusEnum::class)]
+    protected UserStatusEnum $status = UserStatusEnum::NOT_CONFIRMED;
 
     #[ORM\Column(name: 'date_created', type: 'datetime', nullable: false)]
     protected \DateTime $date_created;
@@ -77,6 +81,17 @@ class User extends AbstractEntity implements UserInterface
     public function setDateCreated(\DateTime $date_created): static
     {
         $this->date_created = $date_created;
+        return $this;
+    }
+
+    public function getStatus(): UserStatusEnum
+    {
+        return $this->status;
+    }
+
+    public function setStatus(UserStatusEnum $status): User
+    {
+        $this->status = $status;
         return $this;
     }
 }

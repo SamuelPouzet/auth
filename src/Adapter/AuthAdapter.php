@@ -5,6 +5,7 @@ namespace SamuelPouzet\Auth\Adapter;
 use Doctrine\ORM\EntityManagerInterface;
 use Laminas\Authentication\Adapter\AdapterInterface;
 use Laminas\Authentication\Result;
+use SamuelPouzet\Auth\Enumerations\UserStatusEnum;
 use SamuelPouzet\Auth\Interface\UserInterface;
 use SamuelPouzet\Crypt\Crypt;
 
@@ -22,13 +23,29 @@ class AuthAdapter implements AdapterInterface
     public function authenticate(): Result
     {
         $user = $this->entityManager->getRepository(UserInterface::class)->findOneBy(['login' => $this->getLogin()]);
-        if (! $user) {
+        if (!$user) {
             return new Result(
                 Result::FAILURE_IDENTITY_NOT_FOUND,
                 null,
                 ['user not found']
             );
         }
+        $status = $user->getStatus();
+
+        if ($status !== UserStatusEnum::ACTIVE) {
+            if ($status === UserStatusEnum::NOT_CONFIRMED) {
+                return new Result(Result::FAILURE_CREDENTIAL_INVALID,
+                    null,
+                    ['User is not active.']);
+            } else {
+                return new Result(
+                    Result::FAILURE_CREDENTIAL_INVALID,
+                    null,
+                    ['User is retired.']
+                );
+            }
+        }
+
         $crypt = new Crypt();
         if ($crypt->verify($this->getPassword(), $user->getPassword())) {
             return new Result(
