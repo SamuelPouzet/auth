@@ -15,7 +15,7 @@ class UserManager
     {
     }
 
-    public function addUser(array $data): UserInterface
+    public function addUser(array $data, bool $activated = false): UserInterface
     {
         $hash = new Crypt();
 
@@ -25,7 +25,11 @@ class UserManager
             ->setEmail($data['email'])
             ->setDateCreated(new \DateTime())
         ;
-        $this->generateToken($user);
+        if ($activated) {
+            $user->setStatus(UserStatusEnum::ACTIVE);
+        } else {
+            $this->generateToken($user);
+        }
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
