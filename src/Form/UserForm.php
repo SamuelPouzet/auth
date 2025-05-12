@@ -12,9 +12,9 @@ use SamuelPouzet\Auth\Interface\Form\UserFormInterface;
 
 class UserForm extends Form implements InputFilterAwareInterface, UserFormInterface
 {
-    public function __construct()
+    public function __construct($name = null, array $options = [])
     {
-        parent::__construct();
+        parent::__construct($name, $options);
         $this->addFormElements();
         $this->addInputFilters();
     }

@@ -4,7 +4,6 @@ namespace SamuelPouzet\Auth\Config;
 
 use Application\Controller\IndexController;
 use Application\Controller\LoginController;
-use Application\Controller\ProtectedController;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Cache\Storage\Adapter\Filesystem;
@@ -12,6 +11,8 @@ use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\Session\Storage\SessionArrayStorage;
 use Laminas\Session\Validator\HttpUserAgent;
 use Laminas\Session\Validator\RemoteAddr;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 use SamuelPouzet\Auth\Adapter\AuthAdapter;
 use SamuelPouzet\Auth\Adapter\Factory\AuthAdapterFactory;
 use SamuelPouzet\Auth\Command\CreateUserCommand;
@@ -24,34 +25,56 @@ use SamuelPouzet\Auth\Command\UpdatePasswordCommand;
 use SamuelPouzet\Auth\Command\UpdateUserCommand;
 use SamuelPouzet\Auth\Entity\User;
 use SamuelPouzet\Auth\Form\AuthForm;
+use SamuelPouzet\Auth\Form\ReinitPasswordForm;
+use SamuelPouzet\Auth\Form\ReloadPasswordForm;
+use SamuelPouzet\Auth\Form\TokenForm;
 use SamuelPouzet\Auth\Form\UpdateUserForm;
 use SamuelPouzet\Auth\Form\UserForm;
+use SamuelPouzet\Auth\Interface\Form\AuthFormInterface;
+use SamuelPouzet\Auth\Interface\Form\ReinitPasswordFormInterface;
+use SamuelPouzet\Auth\Interface\Form\ReloadPasswordFormInterface;
+use SamuelPouzet\Auth\Interface\Form\TokenFormInterface;
+use SamuelPouzet\Auth\Interface\Form\UpdateUserFormInterface;
+use SamuelPouzet\Auth\Interface\Form\UserFormInterface;
 use SamuelPouzet\Auth\Interface\UserInterface;
 use SamuelPouzet\Auth\Listener\AuthListener;
 use SamuelPouzet\Auth\Manager\Factory\UserManagerFactory;
 use SamuelPouzet\Auth\Manager\UserManager;
 use SamuelPouzet\Auth\Plugins\CurrentUserPlugin;
 use SamuelPouzet\Auth\Plugins\Factory\CurrentUserPluginFactory;
+use SamuelPouzet\Auth\Plugins\Factory\FormPluginFactory;
 use SamuelPouzet\Auth\Plugins\Factory\UserPluginFactory;
+use SamuelPouzet\Auth\Plugins\FormPlugin;
 use SamuelPouzet\Auth\Plugins\UserPlugin;
 use SamuelPouzet\Auth\Service\AuthService;
 use SamuelPouzet\Auth\Service\CredentialService;
+use SamuelPouzet\Auth\Service\EmailService;
 use SamuelPouzet\Auth\Service\Factory\AuthenticationServiceFactory;
 use SamuelPouzet\Auth\Service\Factory\AuthServiceFactory;
 use SamuelPouzet\Auth\Service\Factory\CredentialServiceFactory;
+use SamuelPouzet\Auth\Service\Factory\EmailServiceFactory;
+use SamuelPouzet\Auth\Service\Factory\FormServiceFactory;
 use SamuelPouzet\Auth\Service\Factory\IdentityServiceFactory;
+use SamuelPouzet\Auth\Service\Factory\MailerServiceFactory;
 use SamuelPouzet\Auth\Service\Factory\UserServiceFactory;
+use SamuelPouzet\Auth\Service\FormService;
 use SamuelPouzet\Auth\Service\IdentityService;
+use SamuelPouzet\Auth\Service\MailerService;
 use SamuelPouzet\Auth\Service\UserService;
 use SamuelPouzet\Auth\View\CurrentUserHelper;
 use SamuelPouzet\Auth\View\Factory\CurrentUserHelperFactory;
 
 return [
     'samuelpouzet' => [
-        'form' => [
-            'authForm' => AuthForm::class,
-            'userForm' => UserForm::class,
-            'updateUserForm' => UpdateUserForm::class,
+        'form_resolver' => [
+            AuthFormInterface::class => AuthForm::class,
+            UserFormInterface::class => UserForm::class,
+            TokenFormInterface::class => TokenForm::class,
+            UpdateUserFormInterface::class => UpdateUserForm::class,
+            ReinitPasswordFormInterface::class => reinitPasswordForm::class,
+            ReloadPasswordFormInterface::class => ReloadPasswordForm::class,
+        ],
+        'auth' => [
             'default_user' => [
                 'login' => 'admin',
                 'password' => 'Secur1ty!',
@@ -90,18 +113,49 @@ return [
             AuthenticationService::class => AuthenticationServiceFactory::class,
             AuthService::class => AuthServiceFactory::class,
             CredentialService::class => CredentialServiceFactory::class,
+            EmailService::class => EmailServiceFactory::class,
+            FormService::class => FormServiceFactory::class,
             IdentityService::class => IdentityServiceFactory::class,
+            MailerService::class => MailerServiceFactory::class,
             UserService::class => UserServiceFactory::class,
         ],
     ],
+    'mailer' => [
+        'default' => [
+            'options' => [
+                'protocol' => 'smtp',
+                'user' => 'example@gmail.com',
+                'password' => 'password',
+                'host' => 'smtp.gmail.com',
+                'port' => 587,
+                'smtp_auth' => true,
+                'debug' => SMTP::DEBUG_SERVER,
+                'secure' => PHPMailer::ENCRYPTION_STARTTLS,
+                'options' => [
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true,
+                    ]
+                ]
+            ],
+        ],
+    ],
+    'mailer_account' => [
+        'default' => [
+            'from' => 'gandalf@sampouzet.fr'
+        ]
+    ],
     'controller_plugins' => [
         'factories' => [
-            UserPlugin::class => UserPluginFactory::class,
             CurrentUserPlugin::class => CurrentUserPluginFactory::class,
+            FormPlugin::class => FormPluginFactory::class,
+            UserPlugin::class => UserPluginFactory::class,
         ],
         'aliases' => [
-            'getUser' => UserPlugin::class,
             'getCurrentUser' => CurrentUserPlugin::class,
+            'getForm' => FormPlugin::class,
+            'getUser' => UserPlugin::class,
         ],
     ],
     'view_helpers' => [

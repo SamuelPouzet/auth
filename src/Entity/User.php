@@ -23,6 +23,9 @@ class User extends AbstractEntity implements UserInterface
     #[ORM\Column(name: 'email', type: 'string', length: 200, nullable: false)]
     protected string $email;
 
+    #[ORM\Column(name: 'token', type: 'string', length: 200, nullable: false)]
+    protected ?string $token = null;
+
     #[ORM\Column(name: 'status', length: 200, nullable: false, enumType: UserStatusEnum::class)]
     protected UserStatusEnum $status = UserStatusEnum::NOT_CONFIRMED;
 
@@ -92,6 +95,17 @@ class User extends AbstractEntity implements UserInterface
     public function setStatus(UserStatusEnum $status): User
     {
         $this->status = $status;
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): User
+    {
+        $this->token = $token;
         return $this;
     }
 }

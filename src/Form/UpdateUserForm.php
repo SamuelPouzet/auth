@@ -11,10 +11,9 @@ use SamuelPouzet\Auth\Interface\Form\UpdateUserFormInterface;
 
 class UpdateUserForm extends Form implements InputFilterAwareInterface, UpdateUserFormInterface
 {
-
-    public function __construct()
+    public function __construct($name = null, array $options = [])
     {
-        parent::__construct();
+        parent::__construct($name, $options);
         $this->addFormElements();
         $this->addInputFilters();
     }
