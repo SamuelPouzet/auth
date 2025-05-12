@@ -57,7 +57,7 @@ class CreateUserCommand extends Command
                 'login' => $login,
                 'password' => $password,
                 'email' => $email,
-            ]);
+            ], true);
         } catch (\Exception $exception) {
             $io->error($exception->getMessage());
             return Command::FAILURE;

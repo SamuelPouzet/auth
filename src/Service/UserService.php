@@ -15,10 +15,12 @@ class UserService
     ) {
     }
 
-    public function createUser(array $data): void
+    public function createUser(array $data, bool $activated = false): void
     {
-            $user = $this->userManager->addUser($data);
-            $this->emailService->sendConfirmationEmail($user);
+            $user = $this->userManager->addUser($data, $activated);
+            if (! $activated) {
+                $this->emailService->sendConfirmationEmail($user);
+            }
     }
 
     public function updateUser(UserInterface $user, array $data): void
