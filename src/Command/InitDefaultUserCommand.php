@@ -31,7 +31,7 @@ class InitDefaultUserCommand extends Command
             return Command::FAILURE;
         }
         try {
-            $this->userService->createUser($this->defaultUser);
+            $this->userService->createUser($this->defaultUser, true);
         } catch (\Exception $exception) {
             $iostream->error($exception->getMessage());
             return Command::FAILURE;

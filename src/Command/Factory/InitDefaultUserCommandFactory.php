@@ -27,7 +27,7 @@ class InitDefaultUserCommandFactory implements FactoryInterface
 
     protected function getDefaultUserConfig(array $config): array
     {
-        $defaultUser = $config['samuelpouzet']['form']['default_user'] ?? null;
+        $defaultUser = $config['samuelpouzet']['auth']['default_user'] ?? null;
         if (! $defaultUser || ! is_array($defaultUser)) {
             throw new ServiceNotCreatedException('No default user configured');
         }

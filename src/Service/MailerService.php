@@ -80,6 +80,8 @@ class MailerService
             $this->email->SMTPAuth   = $config['smtp_auth'];
             $this->email->SMTPSecure = $config['secure'];
             $this->email->SMTPOptions = $config['options'];
+            $this->email->CharSet = "UTF-8";
+            $this->email->Encoding = 'base64';
         }
 
 
