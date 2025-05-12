@@ -11,16 +11,9 @@ use SamuelPouzet\Auth\Exception\NotconnectedException;
 class CredentialService
 {
     public function __construct(
-        protected readonly AuthFormInterface $form,
         protected readonly AuthenticationService $authenticationService,
         protected readonly IdentityService $identityService,
-    )
-    {
-    }
-
-    public function getForm(): AuthFormInterface
-    {
-        return $this->form;
+    ) {
     }
 
     public function authenticate(array $credentials): ?Result
@@ -29,18 +22,11 @@ class CredentialService
             throw new AlreadyconnectedException('user already connected');
         }
 
-        $form = $this->getForm();
-        $form->setData($credentials);
-
-        if ($form->isValid()) {
-            $data = $form->getData();
-            $adapter = $this->authenticationService->getAdapter();
-            $adapter->setLogin($data['login']);
-            $adapter->setPassword($data['password']);
-            $response = $this->authenticationService->authenticate();
-            return $response;
-        }
-        return null;
+        $adapter = $this->authenticationService->getAdapter();
+        $adapter->setLogin($credentials['login']);
+        $adapter->setPassword($credentials['password']);
+        $response = $this->authenticationService->authenticate();
+        return $response;
     }
 
     public function logout()
