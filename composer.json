@@ -13,7 +13,8 @@
         "laminas/laminas-authentication": "^2.18",
         "laminas/laminas-mvc-form": "^2.1",
         "laminas/laminas-cli": "^1.11",
-        "laminas/laminas-session": "^2.24"
+        "laminas/laminas-session": "^2.24",
+        "symfony/mailer": "^7.2"
     },
     "autoload": {
         "psr-4": {

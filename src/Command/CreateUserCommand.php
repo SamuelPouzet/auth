@@ -16,9 +16,8 @@ class CreateUserCommand extends Command
 {
     public function __construct(
         protected EntityManagerInterface $entityManager,
-        protected UserService            $userService,
-    )
-    {
+        protected UserService $userService,
+    ) {
         parent::__construct();
     }
 
@@ -59,7 +58,6 @@ class CreateUserCommand extends Command
                 'password' => $password,
                 'email' => $email,
             ]);
-
         } catch (\Exception $exception) {
             $io->error($exception->getMessage());
             return Command::FAILURE;
