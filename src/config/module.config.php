@@ -4,7 +4,6 @@ namespace SamuelPouzet\Auth\Config;
 
 use Application\Controller\IndexController;
 use Application\Controller\LoginController;
-use Application\Controller\ProtectedController;
 use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Cache\Storage\Adapter\Filesystem;
@@ -12,6 +11,8 @@ use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\Session\Storage\SessionArrayStorage;
 use Laminas\Session\Validator\HttpUserAgent;
 use Laminas\Session\Validator\RemoteAddr;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 use SamuelPouzet\Auth\Adapter\AuthAdapter;
 use SamuelPouzet\Auth\Adapter\Factory\AuthAdapterFactory;
 use SamuelPouzet\Auth\Command\CreateUserCommand;
@@ -24,6 +25,9 @@ use SamuelPouzet\Auth\Command\UpdatePasswordCommand;
 use SamuelPouzet\Auth\Command\UpdateUserCommand;
 use SamuelPouzet\Auth\Entity\User;
 use SamuelPouzet\Auth\Form\AuthForm;
+use SamuelPouzet\Auth\Form\ReinitPasswordForm;
+use SamuelPouzet\Auth\Form\ReloadPasswordForm;
+use SamuelPouzet\Auth\Form\TokenForm;
 use SamuelPouzet\Auth\Form\UpdateUserForm;
 use SamuelPouzet\Auth\Form\UserForm;
 use SamuelPouzet\Auth\Interface\UserInterface;
@@ -40,8 +44,10 @@ use SamuelPouzet\Auth\Service\Factory\AuthenticationServiceFactory;
 use SamuelPouzet\Auth\Service\Factory\AuthServiceFactory;
 use SamuelPouzet\Auth\Service\Factory\CredentialServiceFactory;
 use SamuelPouzet\Auth\Service\Factory\IdentityServiceFactory;
+use SamuelPouzet\Auth\Service\Factory\MailerServiceFactory;
 use SamuelPouzet\Auth\Service\Factory\UserServiceFactory;
 use SamuelPouzet\Auth\Service\IdentityService;
+use SamuelPouzet\Auth\Service\MailerService;
 use SamuelPouzet\Auth\Service\UserService;
 use SamuelPouzet\Auth\View\CurrentUserHelper;
 use SamuelPouzet\Auth\View\Factory\CurrentUserHelperFactory;
@@ -51,7 +57,10 @@ return [
         'form' => [
             'authForm' => AuthForm::class,
             'userForm' => UserForm::class,
+            'tokenForm' => TokenForm::class,
             'updateUserForm' => UpdateUserForm::class,
+            'reinitPasswordForm' => ReinitPasswordForm::class,
+            'reloadPasswordForm' => ReloadPasswordForm::class,
             'default_user' => [
                 'login' => 'admin',
                 'password' => 'Secur1ty!',
@@ -91,8 +100,35 @@ return [
             AuthService::class => AuthServiceFactory::class,
             CredentialService::class => CredentialServiceFactory::class,
             IdentityService::class => IdentityServiceFactory::class,
+            MailerService::class => MailerServiceFactory::class,
             UserService::class => UserServiceFactory::class,
         ],
+    ],
+    'mailer' => [
+        'default' => [
+            'options' => [
+                'protocol' => 'smtp',
+                'user' => 'example@gmail.com',
+                'password' => 'password',
+                'host' => 'smtp.gmail.com',
+                'port' => 587,
+                'smtp_auth' => true,
+                'debug' => SMTP::DEBUG_SERVER,
+                'secure' => PHPMailer::ENCRYPTION_STARTTLS,
+                'options' => [
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true,
+                    ]
+                ]
+            ],
+        ],
+    ],
+    'mailer_account' => [
+        'default' => [
+            'from' => 'gandalf@sampouzet.fr'
+        ]
     ],
     'controller_plugins' => [
         'factories' => [
