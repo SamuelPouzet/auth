@@ -35,7 +35,10 @@ class AuthService
 
         $configuration = $this->config['access_filter'][$controller][$action] ?? null;
 
-        if (! $configuration && ! $permissive) {
+        if (! $configuration) {
+            if ($permissive) {
+                return new AuthResult(AuthStatusEnum::GRANTED, null, 'Access by permissive configuration');
+            }
             // no config found and permission is restrictive, no access
             return new AuthResult(AuthStatusEnum::USER_REQUIRED, null);
         }
