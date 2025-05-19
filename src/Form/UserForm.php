@@ -36,11 +36,31 @@ class UserForm extends Form implements InputFilterAwareInterface, UserFormInterf
                 'label' => 'Votre mot de passe',
             ],
         ]);
+
         $this->add([
             'name' => 'email',
             'type' => Email::class,
             'options' => [
                 'label' => 'Votre email',
+            ],
+        ]);
+
+        $this->add([
+            'type' => 'csrf',
+            'name' => 'csrf',
+            'options' => [
+                'csrf_options' => [
+                    'timeout' => 600
+                ]
+            ],
+        ]);
+
+        $this->add([
+            'type'  => 'submit',
+            'name' => 'submit',
+            'attributes' => [
+                'value' => 'Sign in',
+                'id' => 'submit',
             ],
         ]);
     }

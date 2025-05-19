@@ -32,6 +32,25 @@ class ReloadPasswordForm extends Form implements ReloadPasswordFormInterface
                 'label' => 'Confirm new password',
             ],
         ]);
+
+        $this->add([
+            'type' => 'csrf',
+            'name' => 'csrf',
+            'options' => [
+                'csrf_options' => [
+                    'timeout' => 600
+                ]
+            ],
+        ]);
+
+        $this->add([
+            'type'  => 'submit',
+            'name' => 'submit',
+            'attributes' => [
+                'value' => 'Sign in',
+                'id' => 'submit',
+            ],
+        ]);
     }
 
     protected function addInputFilters(): void
