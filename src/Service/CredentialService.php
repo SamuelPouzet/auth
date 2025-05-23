@@ -25,7 +25,7 @@ class CredentialService
         $adapter = $this->authenticationService->getAdapter();
         $adapter->setLogin($credentials['login']);
         $adapter->setPassword($credentials['password']);
-        $response = $this->authenticationService->authenticate();
+        $response = $this->authenticationService->authenticate(null, $credentials['rememberme']);
         return $response;
     }
 

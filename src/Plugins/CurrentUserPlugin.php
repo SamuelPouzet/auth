@@ -10,7 +10,7 @@ class CurrentUserPlugin extends AbstractPlugin
 {
     protected ?UserInterface $user = null;
 
-    public function __construct(protected IdentityService $identityService)
+    public function __construct(protected readonly IdentityService $identityService)
     {
     }
 

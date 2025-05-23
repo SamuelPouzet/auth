@@ -2,6 +2,7 @@
 
 namespace SamuelPouzet\Auth\Form;
 
+use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
@@ -32,6 +33,14 @@ class AuthForm extends Form implements InputFilterAwareInterface, AuthFormInterf
             'type' => Password::class,
             'options' => [
                 'label' => 'Votre mot de passe',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'rememberme',
+            'type' => Checkbox::class,
+            'options' => [
+                'label' => 'Se souvenir de moi',
             ],
         ]);
 

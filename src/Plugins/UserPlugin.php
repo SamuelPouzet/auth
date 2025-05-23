@@ -9,7 +9,7 @@ use SamuelPouzet\Auth\Interface\UserInterface;
 class UserPlugin extends AbstractPlugin
 {
 
-    public function __construct(protected EntityManagerInterface $entityManager)
+    public function __construct(protected readonly EntityManagerInterface $entityManager)
     {
     }
 

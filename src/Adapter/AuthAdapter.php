@@ -16,14 +16,14 @@ class AuthAdapter implements AdapterInterface
     protected string $password;
 
 
-    public function __construct(protected EntityManagerInterface $entityManager)
+    public function __construct(protected readonly EntityManagerInterface $entityManager)
     {
     }
 
     public function authenticate(): Result
     {
         $user = $this->entityManager->getRepository(UserInterface::class)->findOneBy(['login' => $this->getLogin()]);
-        if (!$user) {
+        if (! $user) {
             return new Result(
                 Result::FAILURE_IDENTITY_NOT_FOUND,
                 null,
@@ -34,9 +34,11 @@ class AuthAdapter implements AdapterInterface
 
         if ($status !== UserStatusEnum::ACTIVE) {
             if ($status === UserStatusEnum::NOT_CONFIRMED) {
-                return new Result(Result::FAILURE_CREDENTIAL_INVALID,
+                return new Result(
+                    Result::FAILURE_CREDENTIAL_INVALID,
                     null,
-                    ['User is not active.']);
+                    ['User is not active.']
+                );
             } else {
                 return new Result(
                     Result::FAILURE_CREDENTIAL_INVALID,
@@ -81,17 +83,6 @@ class AuthAdapter implements AdapterInterface
     public function setPassword(string $password): static
     {
         $this->password = $password;
-        return $this;
-    }
-
-    public function getEntityManager(): EntityManagerInterface
-    {
-        return $this->entityManager;
-    }
-
-    public function setEntityManager(EntityManagerInterface $entityManager): static
-    {
-        $this->entityManager = $entityManager;
         return $this;
     }
 }

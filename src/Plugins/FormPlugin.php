@@ -9,7 +9,7 @@ use SamuelPouzet\Auth\Service\FormService;
 
 class FormPlugin extends AbstractPlugin implements PluginInterface
 {
-    public function __construct(protected FormService $formService)
+    public function __construct(protected readonly FormService $formService)
     {
     }
 

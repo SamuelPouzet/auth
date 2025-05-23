@@ -14,8 +14,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class UpdatePasswordCommand extends Command
 {
     public function __construct(
-        protected EntityManagerInterface $entityManager,
-        protected UserService $userService,
+        protected readonly EntityManagerInterface $entityManager,
+        protected readonly UserService $userService,
         ?string $name = null)
     {
         parent::__construct($name);

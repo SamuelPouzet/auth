@@ -13,8 +13,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class InitDefaultUserCommand extends Command
 {
     public function __construct(
-        protected EntityManagerInterface $entityManager,
-        protected UserService $userService,
+        protected readonly EntityManagerInterface $entityManager,
+        protected readonly UserService $userService,
         protected array $defaultUser,
     ) {
         parent::__construct();

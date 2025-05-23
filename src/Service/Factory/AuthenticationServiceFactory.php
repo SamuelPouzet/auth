@@ -17,6 +17,6 @@ class AuthenticationServiceFactory implements FactoryInterface
         $sessionManager = $container->get(SessionManager::class);
         $authStorage = new Session('Purple_auth', 'session', $sessionManager);
         $adapter = $container->get(AuthAdapter::class);
-        return new AuthenticationService($authStorage, $adapter);
+        return new AuthenticationService($sessionManager, $authStorage, $adapter);
     }
 }

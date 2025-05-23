@@ -11,8 +11,8 @@ use SamuelPouzet\Auth\Result\AuthResult;
 class AuthService
 {
     public function __construct(
-        protected array $config,
-        protected IdentityService $identityService,
+        protected readonly array $config,
+        protected readonly IdentityService $identityService,
     ) {
     }
 

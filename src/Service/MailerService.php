@@ -9,7 +9,9 @@ class MailerService
 {
     protected ?string $configName = null;
 
-    public function __construct(protected PHPMailer $email, protected array $config)
+    public function __construct(
+        protected readonly PHPMailer $email,
+        protected readonly array $config)
     {
     }
 

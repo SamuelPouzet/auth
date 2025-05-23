@@ -11,8 +11,8 @@ class IdentityService
     protected ?UserInterface $user;
 
     public function __construct(
-        protected EntityManagerInterface $entityManager,
-        protected AuthenticationServiceInterface $authenticationService
+        protected readonly EntityManagerInterface $entityManager,
+        protected readonly AuthenticationServiceInterface $authenticationService
     ) {
          $login = $authenticationService->getIdentity();
 

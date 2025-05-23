@@ -8,8 +8,8 @@ use SamuelPouzet\Auth\Interface\UserInterface;
 class EmailService
 {
     public function __construct(
-        protected PhpRenderer $renderer,
-        protected MailerService $mailerService
+        protected readonly PhpRenderer $renderer,
+        protected readonly MailerService $mailerService
     ) {
     }
 
